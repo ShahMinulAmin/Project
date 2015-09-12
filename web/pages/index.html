@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html ng-app="TEModule">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="TenderEasy Assignment">
+    <meta name="author" content="Sajib">
+
+    <title>TenderEasy Assignment</title>
+
+    <link rel="stylesheet" type="text/css" href="../jquery/ui/css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/app.css"/>
+
+    <script src="../jquery/jquery-1.10.2.js"></script>
+    <script src="../jquery/ui/jquery-ui.js"></script>
+    <script src="../bootstrap/bootstrap.min.js"></script>
+    <script src="../angular/angular.min.js"></script>
+    <script src="../angular/angular-cookies.min.js"></script>
+    <script src="../bootstrap/ui-bootstrap-tpls-0.2.0.min.js"></script>
+    <script src="../bootstrap/bootbox.min.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js"></script>
+
+
+    <script src="../graph/graph-city.js"></script>
+    <script src="../angular/js/version.js"></script>
+    <script src="../angular/js/app.js"></script>
+    <script src="../angular/js/directives.js"></script>
+    <script src="../angular/js/filters.js"></script>
+
+
+    <script>
+        function initialize() {
+            var mapProp = {
+                center: new google.maps.LatLng(59.337525, 18.066510),
+                zoom: 5,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</head>
+
+
+<body ng-controller="FreightController">
+
+<div>
+    <a><img src="../images/topBannar.png" border="0" alt=""/></a>
+</div>
+
+<div class="topMenu">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-4">
+            </div>
+            <div class="col-xs-8 topMenuSection">
+                <span class="topMenuItem">SOLUTIONS</span>
+                <span class="topMenuItem">HOW TO OPTIMIZE</span>
+                <span class="topMenuItem">REFERENCES</span>
+                <span class="topMenuItem">ABOUT US</span>
+                <span class="topMenuItem">SUPPORT</span>
+                <span class="topMenuItem">
+                    <a href="" ng-click="signInDialog()">SIGN IN</a>
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="dialog" style="display: none">
+    <div>
+        <form>
+            <div><input type="text" ng-model="userId"/></div>
+            <div><input type="password" ng-model="userPass"/></div>
+            <div><input value="Submit" type="submit" ng-click="checkUserCredential()"></div>
+        </form>
+    </div>
+    <div class="vSpacer10"></div>
+    <div>
+        {{signinErrorMsg}}
+    </div>
+</div>
+
+
+<div class="container" ng-show="isSignedIn()">
+
+    <div class="vSpacer20"></div>
+
+    <div class="row">
+        <div class="col-xs-12 signInInfo">
+            LOGGED AS: {{userId | uppercase}}
+        </div>
+    </div>
+
+    <div class="vSpacer10"></div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div>
+                <a><img src="../images/middleBannar.png" border="0" alt="" width="1134"/></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="vSpacer20"></div>
+
+
+    <div class="row">
+        <div class="col-xs-3">
+            <button id="dashboard" type="button" class="btn btn-primary" ng-click="selectDashboard()">
+                <span class="buttonText">DASHBOARD</span>
+            </button>
+        </div>
+        <div class="col-xs-3">
+            <button id="frieghtSearch" type="button" class="btn btn-primary" ng-click="selectFreightSeach()">
+                <span class="buttonText">Frieght Search</span>
+            </button>
+        </div>
+        <div class="col-xs-3">
+            <button id="spotRequest" type="button" class="btn btn-primary" ng-click="selectSpotRequest()">
+                <span class="buttonText">Spot Requests</span>
+            </button>
+        </div>
+        <div class="col-xs-3">
+            <button id="bookings" type="button" class="btn btn-primary" ng-click="selectBookings()">
+                <span class="buttonText">Bookings</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="vSpacer30"></div>
+
+
+    <div class="row" ng-show="showSearchOptions()">
+        <form>
+            <div class="col-xs-8">
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-3 labelTextSection">
+                                <span class="labelText">From</span>
+                            </div>
+                            <div class="col-xs-3 ui-widget">
+                                <input id="fromCity" type="text" class="inputText" ng-model="fromCity">
+                                <input type="hidden" id="tempFromCity">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-3 labelTextSection">
+                                <span class="labelText">To</span>
+                            </div>
+                            <div class="col-xs-3 ui-widget">
+                                <input id="toCity" type="text" class="inputText" ng-model="toCity">
+                                <input type="hidden" id="tempToCity">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vSpacer10"></div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-3 labelTextSection">
+                                <span class="labelText">Unit</span>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="dropdown" unit-menu>
+                                    <button id="unitId" class="btn btn-primary dropdown-toggle inputText" type="button" data-toggle="dropdown">
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li id="40"><a href="#">40" Container</a></li>
+                                        <li id="50"><a href="#">50" Container</a></li>
+                                        <li id="60"><a href="#">60" Container</a></li>
+                                        <li id="70"><a href="#">70" Container</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-3 labelTextSection">
+                                <span class="labelText">Terms</span>
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="dropdown" term-menu>
+                                    <button id="termId" class="btn btn-primary dropdown-toggle inputText" type="button" data-toggle="dropdown">
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li id="CIF"><a href="#">CIF</a></li>
+                                        <li id="CIP"><a href="#">CIP</a></li>
+                                        <li id="CFR"><a href="#">CFR</a></li>
+                                        <li id="DES"><a href="#">DES</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-4 searchButtonSection">
+                <input type="image" src="../images/searchButton.png" alt="Submit" ng-click="getSearchResults()">
+            </div>
+        </form>
+    </div>
+
+
+    <div ng-show="!isValidationPassed()">
+        <div class="vSpacer30"></div>
+        <div class="alert alert-danger">
+            <span> {{ errorMsg }} </span>
+        </div>
+    </div>
+
+
+    <div ng-show="isShowSearchResults() && isValidationPassed()">
+
+        <div ng-show="false">
+            <div class="vSpacer10"></div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div>
+                        <a><img src="../images/mapBar.png" border="0" alt="" width="1134"/></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vSpacer10"></div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="googleMap" class="mapSection"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="vSpacer20"></div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div>
+                    <a><img src="../images/resultTopbar.png" border="0" alt="" width="1134"/></a>
+                </div>
+            </div>
+        </div>
+
+
+        <div ng-repeat="routePath in allRoutePaths">
+            <div class="vSpacer10"></div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="searchSummaryBox">
+                        <div>
+                            <span class="searchSummaryText">OPTION {{ routePath.optionNo }} {{ routePath.term | uppercase }}</span>
+                        </div>
+                        <div>
+                            <span class="searchSummaryText"> {{ routePath.routeSummary | uppercase }} FROM {{ routePath.totalCost }} EUR AND  {{ routePath.totalDays }} DAYS </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-repeat="fullPathDetail in routePath.fullPathList">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="searchResultSection">
+                            <div class="vSpacer10" ng-if="!fullPathDetail.showDash"></div>
+                            <div class="searchDashedBorder" ng-if="fullPathDetail.showDash"></div>
+                            <div>
+                                <span class="searchResultText">{{ fullPathDetail.numDays }} DAYS</span>
+                            </div>
+
+                            <div>
+                                <span class="searchResultText">{{ fullPathDetail.transportType | uppercase }}
+                                    {{ fullPathDetail.pathShortName }}  {{ fullPathDetail.container }}’’ CONTAINER
+                                    {{ fullPathDetail.departureSchedule | uppercase }}
+                                </span>
+                            </div>
+
+                            <div>
+                                <span class="searchResultText">{{ fullPathDetail.environSafety | uppercase }}</span>
+                            </div>
+
+                            <div class="searchOptionCostSection">
+                                <span class="searchOptionCostText">€{{ fullPathDetail.cost }}</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xs-9 bookButtonSection">
+                    <input type="submit" id="bookButton" name="submit" alt="search" value="TOTAL {{ routePath.totalCost }}€ BOOK" class="bookButton">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="vSpacer40"></div>
+    <div class="vSpacer40"></div>
+
+
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        var availableCities = [
+            "Stockholm",
+            "Orlando",
+            "Gothenburg",
+            "Ft. Lauderdale",
+            "Savannah",
+            "Rotterdam"
+        ];
+
+        $("#fromCity").autocomplete({
+            source: availableCities,
+            select: function( event, ui) {
+                //console.log(ui.item.value);
+                $("#tempFromCity").val(ui.item.value);
+            }
+        });
+
+        $("#toCity").autocomplete({
+            source: availableCities,
+            select: function( event, ui) {
+                //console.log(ui.item.value);
+                $("#tempToCity").val(ui.item.value);
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>

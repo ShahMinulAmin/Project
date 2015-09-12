@@ -1,0 +1,183 @@
+
+html {
+    overflow-y: scroll;
+}
+
+.modal {
+    overflow-y: auto;
+}
+
+a {
+  color:white;
+}
+
+/* unvisited link */
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+}
+
+/* mouse over link */
+a:hover {
+    color: white;
+}
+
+/* selected link */
+a:active {
+    color: white;
+}
+
+.topMenu {
+    background-color: #1880A8;
+    min-height: 70px;
+    box-shadow: 5px 5px 10px grey;
+}
+
+.topMenuSection {
+    font-weight: bold;
+    color: white;
+    padding-top: 25px;
+}
+
+.topMenuItem {
+    padding-left: 30px;
+}
+
+.signInInfo {
+    color:#1880A8;
+    font-weight: bold;
+}
+
+.buttonText {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* overriding some bootstrap styles */
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+    color: #333333;
+    background-color: grey;
+    border-color: #adadad;
+}
+
+.labelTextSection {
+    padding-top: 10px;
+}
+
+.labelText {
+    font-size: 13px;
+    color:#78a8cc;
+    font-weight: bold;
+}
+
+.inputText {
+    min-height: 50px;
+    width: 180px;
+    border: 3px solid #091e35;
+    padding: 5px;
+    background-color: #224f6a;
+    color: #ffffff;
+    text-align:center;
+    font-weight: bold;
+}
+
+
+.searchButtonSection {
+    padding-top: 25px;
+    padding-left: 50px;
+}
+
+
+input#bookButton {
+    background:url(../images/bookButton.png);
+    background-repeat: no-repeat;
+    width:260px;
+    height:50px;
+    border: 0;
+    font-size: 16px;
+    color:#323232;
+    font-weight: bold;
+}
+
+.mapSection {
+    width:1134px;
+    height:380px;
+}
+
+.searchSummaryBox {
+    border: 5px solid #091e35;
+    width: 1134px;
+    padding: 5px;
+    background-color: #e6eff4;
+}
+
+.searchSummaryText {
+    font-size: 16px;
+    color:#78a8cc;
+    font-weight: bold;
+}
+
+.searchResultSection {
+    padding-left: 20px;
+}
+
+.searchResultText {
+    font-size: 13px;
+    color:#78a8cc;
+    font-weight: bold;
+}
+
+.searchOptionCostSection {
+    text-align: right;
+    width: 1114px;
+}
+
+.searchOptionCostText {
+    font-size: 13px;
+    color:#78a8cc;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.searchDashedBorder {
+    border-top-style: dashed;
+    width: 1114px;
+    border-width: 2px;
+}
+
+.bookButtonSection {
+    padding-left: 895px;
+}
+
+
+.vSpacer10 {
+    margin-top: 10px;
+}
+
+.vSpacer20 {
+    margin-top: 20px;
+}
+
+.vSpacer30 {
+    margin-top: 30px;
+}
+
+.vSpacer40 {
+    margin-top: 100px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-left {
+    text-align: left;
+}
