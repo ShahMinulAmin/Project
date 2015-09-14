@@ -181,7 +181,7 @@ function test() {
 
     graph.start = nodes[0];
     graph.end = nodes[1];
-    var edge = new PathEdge(graph.start, 0);
+    var edge = new PathEdge(graph.start, 0, "", 0, "", 0, "", "");
     var routeVisited = [];
     routeVisited.push(edge);
 

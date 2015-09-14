@@ -19,8 +19,8 @@
     <script src="../angular/angular-cookies.min.js"></script>
     <script src="../bootstrap/ui-bootstrap-tpls-0.2.0.min.js"></script>
     <script src="../bootstrap/bootbox.min.js"></script>
-    <script src="http://maps.googleapis.com/maps/api/js"></script>
-
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=geometry"></script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox_packed.js"></script>
 
     <script src="../graph/graph-city.js"></script>
     <script src="../angular/js/version.js"></script>
@@ -28,18 +28,6 @@
     <script src="../angular/js/directives.js"></script>
     <script src="../angular/js/filters.js"></script>
 
-
-    <script>
-        function initialize() {
-            var mapProp = {
-                center: new google.maps.LatLng(59.337525, 18.066510),
-                zoom: 5,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
 </head>
 
 
@@ -172,7 +160,7 @@
                                 <span class="labelText">Unit</span>
                             </div>
                             <div class="col-xs-3">
-                                <div class="dropdown" unit-menu>
+                                <div class="dropup" unit-menu>
                                     <button id="unitId" class="btn btn-primary dropdown-toggle inputText" type="button" data-toggle="dropdown">
                                     </button>
                                     <ul class="dropdown-menu">
@@ -192,7 +180,7 @@
                                 <span class="labelText">Terms</span>
                             </div>
                             <div class="col-xs-3">
-                                <div class="dropdown" term-menu>
+                                <div class="dropup" term-menu>
                                     <button id="termId" class="btn btn-primary dropdown-toggle inputText" type="button" data-toggle="dropdown">
                                     </button>
                                     <ul class="dropdown-menu">
@@ -220,13 +208,16 @@
         <div class="vSpacer30"></div>
         <div class="alert alert-danger">
             <span> {{ errorMsg }} </span>
+            <ul ng-repeat="validationErrorField in validationErrorFields">
+                <li> {{ validationErrorField.fieldName }} </li>
+            </ul>
         </div>
     </div>
 
 
     <div ng-show="isShowSearchResults() && isValidationPassed()">
 
-        <div ng-show="false">
+        <div>
             <div class="vSpacer10"></div>
             <div class="row">
                 <div class="col-xs-12">
@@ -312,10 +303,12 @@
 
 
 
-
     <div class="vSpacer40"></div>
     <div class="vSpacer40"></div>
-
+    <div class="vSpacer40"></div>
+    <div class="vSpacer40"></div>
+    <div class="vSpacer40"></div>
+    <div class="vSpacer40"></div>
 
 </div>
 
@@ -336,6 +329,23 @@
             select: function( event, ui) {
                 //console.log(ui.item.value);
                 $("#tempFromCity").val(ui.item.value);
+            },
+            change: function( event, ui ) {
+                var found = false;
+                var city = $("#fromCity").val();
+                console.log('city: ' + city);
+                for (var i = 0; i < availableCities.length; i++) {
+                    if (availableCities[i] == city) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    //alert("Invalid information.");
+                    bootbox.alert("Invalid information.");
+                } else {
+                    //console.log(ui.item.value);
+                    $("#tempFromCity").val(city);
+                }
             }
         });
 
@@ -344,6 +354,23 @@
             select: function( event, ui) {
                 //console.log(ui.item.value);
                 $("#tempToCity").val(ui.item.value);
+            },
+            change: function( event, ui ) {
+                var found = false;
+                var city = $("#toCity").val();
+                console.log('city: ' + city);
+                for (var i = 0; i < availableCities.length; i++) {
+                    if (availableCities[i] == city) {
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    //alert("Invalid information.");
+                    bootbox.alert("Invalid information.");
+                } else {
+                    //console.log(ui.item.value);
+                    $("#tempToCity").val(city);
+                }
             }
         });
     });
