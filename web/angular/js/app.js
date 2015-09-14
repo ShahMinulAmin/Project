@@ -447,9 +447,11 @@ TEModule.controller('FreightController',
                     title: fullPath[0].destination.name,
                     icon: '../images/mapMarkIcon.png'
                 });
+                var content = fullPath[0].destination.name + ', ' + fullPath[0].destination.country;
                 infowindow = new google.maps.InfoWindow({
-                    content: fullPath[0].destination.name + ', ' + fullPath[0].destination.country
+                    content: content
                 });
+
                 google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
                     return function () {
                         infowindow.setContent(content);
@@ -476,8 +478,9 @@ TEModule.controller('FreightController',
                         icon: '../images/cargoShip.png'
                     });
                 }
+                content = fullPath[0].destination.name + ', ' + fullPath[0].destination.country;
                 infowindow = new google.maps.InfoWindow({
-                    content: fullPath[0].destination.name + ', ' + fullPath[0].destination.country
+                    content: content
                 });
                 google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
                     return function () {
@@ -531,8 +534,9 @@ TEModule.controller('FreightController',
                         });
                     }
 
+                    content = fullPath[i].destination.name + ', ' + fullPath[i].destination.country;
                     infowindow = new google.maps.InfoWindow({
-                        content: fullPath[i].destination.name + ', ' + fullPath[i].destination.country
+                        content: content
                     });
                     google.maps.event.addListener(marker, 'click', (function (marker, content, infowindow) {
                         return function () {
