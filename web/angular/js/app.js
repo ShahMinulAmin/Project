@@ -322,7 +322,7 @@ TEModule.controller('FreightController',
             $scope.toCity = $("#tempToCity").val();
 
             console.log('$scope.fromCity: ' + $scope.fromCity);
-            console.log(' $scope.toCity: ' +  $scope.toCity);
+            console.log('$scope.toCity: ' +  $scope.toCity);
             console.log('$scope.selectedUnitMenuId: ' + $scope.selectedUnitMenuId);
             console.log('$scope.selectedTermMenuId: ' + $scope.selectedTermMenuId);
 
@@ -431,8 +431,8 @@ TEModule.controller('FreightController',
 
                 // handle first node of source city separately
                 var location = new google.maps.LatLng(fullPath[0].destination.latitude, fullPath[0].destination.longitude);
-                console.log('location latitude: ' + location.lat());
-                console.log('location longitude: ' + location.lng());
+                //console.log('location latitude: ' + location.lat());
+                //console.log('location longitude: ' + location.lng());
 
                 routePolylineNodes.push(location);
                 var marker = {};
@@ -497,8 +497,8 @@ TEModule.controller('FreightController',
                 // inner loop
                 for (var i = 1; i < fullPath.length; i++) {
                     location = new google.maps.LatLng(fullPath[i].destination.latitude, fullPath[i].destination.longitude);
-                    console.log('location latitude: ' + location.lat());
-                    console.log('location longitude: ' + location.lng());
+                    //console.log('location latitude: ' + location.lat());
+                    //console.log('location longitude: ' + location.lng());
                     routePolylineNodes.push(location);
 
                     routeSummary  += "-" + fullPath[i].destination.shortName;
@@ -569,7 +569,7 @@ TEModule.controller('FreightController',
                 });
 
                 var boxText = document.createElement("div");
-                boxText.style.cssText = "border: 2px solid #2A89B2; background: #4E9BC6; padding: 5px;";
+                boxText.style.cssText = "border: 2px solid #2A89B2; background: #4E9BC6; padding: 5px; font-weight:bold;";
                 boxText.innerHTML = routeSummary + " FROM " + totalCost + " EUR AND " + totalDays + " DAYS";
                 var ibOptions = {
                     content: boxText
